@@ -3,6 +3,7 @@ import PrivateRoute from "./PrivateRoute";
 import Home from "@/pages/Home";
 import SignInPage from "@/pages/SignInPage";
 import Dashboard from "@/pages/Dashboard";
+import SignUpPage from "@/pages/SignUpPage";
 
 const AllRoutes = () => {
   return (
@@ -11,6 +12,7 @@ const AllRoutes = () => {
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
 
         {/* Private Routes */}
         <Route

@@ -7,7 +7,8 @@ import ThemeToggle from "@/components/custom/ThemeToggle";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
 
-export default function SignIn() {
+export default function SignUpPage() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,7 +21,7 @@ export default function SignIn() {
     <div className="flex justify-center items-center min-h-screen bg-background">
       <Card className="w-full max-w-md p-6 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-center">Sign In</CardTitle>
+          <CardTitle className="text-center">Sign Up</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex justify-center py-5">
@@ -30,6 +31,12 @@ export default function SignIn() {
             />
           </div>
           <div className="flex flex-col gap-4">
+            <Input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
             <Input
               type="email"
               placeholder="Email"
@@ -42,11 +49,14 @@ export default function SignIn() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button className="w-full">Login</Button>
+            <Button className="w-full">Sign Up</Button>
           </div>
           <div className="text-center mt-4">
             <p>
-              Dont have an account? <Link to={"/sign-up"} className="text-blue-500">Sign Up</Link>
+              Already have an account?{" "}
+              <Link to={"/sign-in"} className="text-blue-500">
+                Sign In
+              </Link>
             </p>
           </div>
         </CardContent>

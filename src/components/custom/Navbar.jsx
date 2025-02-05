@@ -1,8 +1,10 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+// import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { AiOutlineMenu, AiOutlineFileText } from "react-icons/ai";
 import { FiBook, FiUser, FiGrid } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
 
 
 const navItems = [
@@ -37,12 +39,9 @@ const Navbar = () => {
 
         {/* Desktop Buttons */}
         <div className="items-center hidden gap-4 lg:flex">
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-         <SignedIn>
-         <UserButton />
-         </SignedIn>
+
+          <Link to={"/sign-in"} >Sing In</Link>
+            <ThemeToggle/>
         </div>
 
         {/* Mobile Sidebar (Sheet) */}
