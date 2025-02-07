@@ -1,0 +1,100 @@
+{
+    "name": "sandeep",
+    "email": "sandeep@example.com",
+    "password": "securepassword123",
+    "profileImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7LX0Y2n7yqgVAgbVIP8JSvemDJz7h9SlNmw&s",
+    "borrowedBooks": [
+      { "id": 1, "title": "To Kill a Mockingbird", "dueDate": "2025-03-10" },
+      { "id": 2, "title": "The Catcher in the Rye", "dueDate": "2025-04-05" }
+    ],
+    "wishlist": [
+      { "id": 1, "title": "Moby Dick", "author": "Herman Melville" },
+      { "id": 2, "title": "1984", "author": "George Orwell" },
+      { "id": 3, "title": "Brave New World", "author": "Aldous Huxley" }
+    ],
+    "myBooks": [
+      {
+        "id": 1,
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "availableCopies": 5,
+        "totalCopies": 5,
+        "reservations": []
+      },
+      {
+        "id": 2,
+        "title": "1984",
+        "author": "George Orwell",
+        "availableCopies": 3,
+        "totalCopies": 5,
+        "reservations": []
+      },
+      {
+        "id": 3,
+        "title": "To Kill a Mockingbird",
+        "author": "Harper Lee",
+        "availableCopies": 2,
+        "totalCopies": 5,
+        "reservations": []
+      },
+      {
+        "id": 4,
+        "title": "The Catcher in the Rye",
+        "author": "J.D. Salinger",
+        "availableCopies": 0,
+        "totalCopies": 3,
+        "reservations": [
+          { "userId": "user1", "date": "2025-02-01T12:00:00Z" }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Moby-Dick",
+        "author": "Herman Melville",
+        "availableCopies": 4,
+        "totalCopies": 5,
+        "reservations": []
+      },
+      {
+        "id": 6,
+        "title": "Pride and Prejudice",
+        "author": "Jane Austen",
+        "availableCopies": 1,
+        "totalCopies": 2,
+        "reservations": []
+      },
+      {
+        "id": 7,
+        "title": "War and Peace",
+        "author": "Leo Tolstoy",
+        "availableCopies": 2,
+        "totalCopies": 3,
+        "reservations": []
+      },
+      {
+        "id": 8,
+        "title": "The Odyssey",
+        "author": "Homer",
+        "availableCopies": 3,
+        "totalCopies": 3,
+        "reservations": []
+      },
+      {
+        "id": 9,
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "availableCopies": 1,
+        "totalCopies": 2,
+        "reservations": []
+      },
+      {
+        "id": 10,
+        "title": "Brave New World",
+        "author": "Aldous Huxley",
+        "availableCopies": 2,
+        "totalCopies": 3,
+        "reservations": []
+      }
+    ]
+  }
+  

@@ -1,34 +1,37 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { LogOut, Moon, Sun, Search, Filter } from 'lucide-react';
+import { LogOut, Moon, Sun, Filter } from 'lucide-react';
+
+import MyWishlist from './MyWishlist';  
+import MyBorrowingTab from './MyBorrowing'; 
 
 const UserProfile = () => {
-  const [theme, setTheme] = React.useState('light');
-  
-  // Mock user data
-  const userData = {
-    name: 'sandeep',
-    email: 'sandeep@gmail.com',
-    profileImage: 'https://www.shutterstock.com/image-photo/living-coral-color-year-2019-260nw-1250940526.jpg',
-    borrowedBooks: [
-      { id: 1, title: 'The Great Gatsby', dueDate: '2025-03-01' },
-      { id: 2, title: '1984', dueDate: '2025-02-28' },
-    ],
-    wishlist: [
-      { id: 1, title: 'Dune', author: 'Frank Herbert' },
-      { id: 2, title: 'Foundation', author: 'Isaac Asimov' },
-    ],
-    myBooks: [
-      { id: 1, title: 'The Hobbit', author: 'J.R.R. Tolkien', genre: 'Fantasy' },
-      { id: 2, title: 'Pride and Prejudice', author: 'Jane Austen', genre: 'Classic' },
-    ],
-  };
+  const [theme, setTheme] = useState('light');
+  const [profileImage, setProfileImage] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Fetch user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const response = await fetch('./Data.json'); 
+      const data = await response.json();
+      setUserData(data);
+      setProfileImage(data.profileImage); 
+      setName(data.name);
+      setEmail(data.email);
+      setPassword(data.password);
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleLogout = () => {
     console.log('Logging out...');
@@ -38,13 +41,44 @@ const UserProfile = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSaveChanges = () => {
+    const updatedUserData = {
+      ...userData,
+      name: name,
+      email: email,
+      password: password,
+      profileImage: profileImage,
+    };
+
+    // Logic for saving the updated data (e.g., API call)
+    // For now, just log it out
+    console.log('Updated User Data:', updatedUserData);
+
+  };
+
+ 
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="container mx-auto p-4 max-w-4xl">
       <Card className="mb-6">
         <CardContent className="pt-6">
           <div className="flex items-center gap-6">
             <img
-              src={userData.profileImage}
+              src={profileImage}
               alt="Profile"
               className="rounded-full w-24 h-24"
             />
@@ -56,6 +90,16 @@ const UserProfile = () => {
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </Button>
+          </div>
+          
+          <div className="mt-4">
+            <input
+              id="profileImage"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mt-2"
+            />
           </div>
         </CardContent>
       </Card>
@@ -75,13 +119,27 @@ const UserProfile = () => {
               <div className="space-y-4">
                 <div>
                   <Label>Full Name</Label>
-                  <Input defaultValue={userData.name} />
+                  <Input 
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)} 
+                  />
                 </div>
                 <div>
                   <Label>Email</Label>
-                  <Input defaultValue={userData.email} />
+                  <Input 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                  />
                 </div>
-                <Button>Save Changes</Button>
+                <div>
+                  <Label>Password</Label>
+                  <Input 
+                    type="password"
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                  />
+                </div>
+                <Button onClick={handleSaveChanges}>Save Changes</Button>
               </div>
             </CardContent>
           </Card>
@@ -113,30 +171,7 @@ const UserProfile = () => {
         <TabsContent value="borrowing">
           <Card>
             <CardContent className="pt-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold">Borrowed Books</h3>
-                  <Select defaultValue="all">
-                    <SelectTrigger className="w-32">
-                      <SelectValue placeholder="Filter" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="overdue">Overdue</SelectItem>
-                      <SelectItem value="current">Current</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                {userData.borrowedBooks.map((book) => (
-                  <div key={book.id} className="flex items-center justify-between p-4 border rounded">
-                    <div>
-                      <h4 className="font-medium">{book.title}</h4>
-                      <p className="text-sm text-gray-500">Due: {book.dueDate}</p>
-                    </div>
-                    <Button variant="outline">Return</Button>
-                  </div>
-                ))}
-              </div>
+              <MyBorrowingTab borrowedBooks={userData.borrowedBooks} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -144,28 +179,7 @@ const UserProfile = () => {
         <TabsContent value="wishlist">
           <Card>
             <CardContent className="pt-6">
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <Input
-                    placeholder="Search wishlist..."
-                    className="flex-1"
-                    type="search"
-                  />
-                  <Button variant="outline">
-                    <Search className="mr-2 h-4 w-4" />
-                    Search
-                  </Button>
-                </div>
-                {userData.wishlist.map((book) => (
-                  <div key={book.id} className="flex items-center justify-between p-4 border rounded">
-                    <div>
-                      <h4 className="font-medium">{book.title}</h4>
-                      <p className="text-sm text-gray-500">By {book.author}</p>
-                    </div>
-                    <Button variant="outline">Remove</Button>
-                  </div>
-                ))}
-              </div>
+              <MyWishlist />
             </CardContent>
           </Card>
         </TabsContent>
