@@ -7,15 +7,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { FaCamera } from "react-icons/fa";
-import ThemeToggle from "@/components/custom/ThemeToggle";
 import { googleSingnupUser, signupUser } from "@/Api/userService";
 import { toast } from "react-toastify";
 import { useAuth } from "@/context/AuthContext";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("/placeholder-user.jpg");
 
@@ -73,9 +74,6 @@ export default function SignUpPage() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-background">
-      <div className="absolute top-4 right-4">
-        <ThemeToggle />
-      </div>
       <Card className="w-full max-w-md p-6 shadow-lg">
         <CardHeader>
           <CardTitle className="text-center">Sign Up</CardTitle>
@@ -120,13 +118,25 @@ export default function SignUpPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+              >
+                {showPassword ? (
+                  <AiOutlineEyeInvisible size={20} />
+                ) : (
+                  <AiOutlineEye size={20} />
+                )}
+              </button>
+            </div>
             <Button type="submit" className="w-full">
               Sign Up
             </Button>
@@ -141,6 +151,9 @@ export default function SignUpPage() {
           </div>
         </CardContent>
       </Card>
+      <Link to={"/"} className="absolute top-4 left-4">
+        <img className="w-10 h-10" src="/logo.png" alt="Logo" />
+      </Link>
     </div>
   );
 }
