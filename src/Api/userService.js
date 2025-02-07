@@ -8,4 +8,8 @@ const signupUser = (data) => {
   return apiClient.post("/user/signup", data);
 };
 
-export { loginUser, signupUser };
+const googleSingnupUser = (token)=>{
+  return apiClient.post("/user/googleSignup", {token})
+}
+
+export { loginUser, signupUser, googleSingnupUser };

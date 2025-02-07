@@ -1,15 +1,13 @@
 /* eslint-disable react/prop-types */
-import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
+import { useAuth } from "@/context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
-  return (
-    <>
-      <SignedIn>{children}</SignedIn>
-      <SignedOut>
-        <RedirectToSignIn />
-      </SignedOut>
-    </>
-  );
+  const { user, loading } = useAuth();
+
+  if (loading) return <p>Loading...</p>;
+
+  return user ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
