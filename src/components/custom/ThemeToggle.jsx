@@ -6,7 +6,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full bg-secondary text-secondary-foreground hover:bg-muted transition"
+      className="p-1 rounded-full bg-secondary text-secondary-foreground hover:bg-muted transition"
     >
       {theme === "dark" ? <FiSun size={22} /> : <FiMoon size={22} />}
     </button>

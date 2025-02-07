@@ -13,7 +13,7 @@ const Hero = () => {
       <img
         src="https://bucket.material-tailwind.com/magic-ai/533bce4cae28c0673a41bd6f91cf9d1063c842a2bd80092e2c9b000df480dd7c.jpg"
         alt="bg-img"
-        className="absolute inset-0 mx-auto h-full rounded-bl-[100px] object-cover object-center w-screen"
+        className="absolute inset-0  h-full rounded-bl-[100px] object-cover object-center w-screen"
       />
       <div className="container mx-auto lg:mt-0">
         <div className="grid grid-cols-12 text-center lg:text-left">
