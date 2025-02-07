@@ -18,7 +18,9 @@ import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, userData } = useAuth();
+
+  console.log(userData)
 
   return (
     <nav className="w-full max-w-screen-2xl mx-auto rounded-xl py-2 px-8 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border-white/80 bg-black !text-white sticky z-50 border-0">

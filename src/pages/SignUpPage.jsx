@@ -38,6 +38,8 @@ export default function SignUpPage() {
         );
       }
       login(res.data);
+      // const userData = await getUserProfile(res.data.user.id) ;
+      // setUserData(userData)
     } catch (err) {
       console.log(err.message);
     }

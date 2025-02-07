@@ -29,6 +29,8 @@ export default function SignIn() {
           `${res.status === 201 ? "Signup" : "Login"} Successfully`
         );
         login(res.data);
+        // const userData = await getUserProfile(res.data.user.id) ;
+        // setUserData(userData)
         navigate("/dashboard");
       }
     } catch (err) {
@@ -48,6 +50,8 @@ export default function SignIn() {
       if (res.status === 200) {
         toast.success("Login Successful");
         login(res.data);
+        // const userData = await getUserProfile(res.data.user.id) ;
+        // setUserData(userData)
         navigate("/dashboard");
       }
     } catch (err) {
