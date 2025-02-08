@@ -160,7 +160,7 @@ const Dashboard = () => {
       sortOrder === "asc" ? a.price - b.price : b.price - a.price
     );
     setBooks(filtered);
-  }, [selectedGenre, sortOrder]);
+  }, [selectedGenre, sortOrder, searchTerm]);
 
   const addToCart = (book) => {
     setCart((prev) => [...prev, book]);
@@ -232,7 +232,7 @@ const Dashboard = () => {
                 <h3 className="text-sm font-semibold">Genre</h3>
                 <select
                   onChange={(e) => setSelectedGenre(e.target.value)}
-                  className="border rounded-md bg-gray-50 dark:bg-gray-700 px-3 py-2 w-full md:w-auto border  border-red-800 dark:border-none"
+                  className="border rounded-md bg-gray-50 dark:bg-gray-700 px-3 py-2 w-full md:w-auto   border-red-800 dark:border-none"
                 >
                   {genres.map((genre) => (
                     <option key={genre} value={genre}>
@@ -265,7 +265,7 @@ const Dashboard = () => {
           {books.map((book) => (
             <div
               key={book.id}
-              className="bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-lg transition-all p-4  border border-red-800 dark:border-white cursor-pointer hover:text-indigo-600 transition-transform duration-300 hover:scale-110"
+              className="bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-lg transition-all p-4  border border-red-800 dark:border-white cursor-pointer hover:text-indigo-600  duration-300 hover:scale-110"
             >
               <div className="relative">
                 <img
