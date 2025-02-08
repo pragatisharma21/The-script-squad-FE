@@ -12,4 +12,8 @@ const googleSingnupUser = (token)=>{
   return apiClient.post("/user/googleSignup", {token})
 }
 
-export { loginUser, signupUser, googleSingnupUser };
+const getUserProfile = (userId)=> {
+  return apiClient.get(`/user/profile/${userId}`);
+}
+
+export { loginUser, signupUser, googleSingnupUser, getUserProfile };

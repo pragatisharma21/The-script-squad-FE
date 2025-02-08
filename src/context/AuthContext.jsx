@@ -6,29 +6,49 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState({});
 
-  const login = (loginData) => {
-    setUser(loginData);
+  const login = async (loginData) => {
+    const data = {
+      name: loginData.user.name,
+      email: loginData.user.email,
+      profileImage: loginData.user.profileImage,
+      userId: loginData.user._id,
+      token: loginData.token,
+    };
+
     localStorage.setItem("authToken", loginData.token);
+    localStorage.setItem("user", JSON.stringify(data));
+
+    setUser(data);
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    setUserData({})
   };
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    if (token) {
-      setUser({ token });
+    const localUser = localStorage.getItem("user");
+
+    if (token && localUser) {
+      try {
+        const parsedUser = JSON.parse(localUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        localStorage.removeItem("user");
+      }
     }
     setLoading(false);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, userData, setUserData, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, userData, setUserData }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,72 +1,109 @@
-// import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { AiOutlineMenu, AiOutlineFileText } from "react-icons/ai";
-import { FiBook, FiUser, FiGrid } from "react-icons/fi";
+import {
+  AiOutlineMenu,
+  AiOutlineHeart,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
-
-
-const navItems = [
-  { name: "Pages", icon: <FiBook className="w-5 h-5" />, href: "#" },
-  { name: "Account", icon: <FiUser className="w-5 h-5" />, href: "#" },
-  { name: "Blocks", icon: <FiGrid className="w-5 h-5" />, href: "#" },
-  { name: "Docs", icon: <AiOutlineFileText className="w-5 h-5" />, href: "#" },
-];
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
+  const { user, userData } = useAuth();
+
+  console.log(userData)
+
   return (
-    <nav className="w-full max-w-screen-2xl mx-auto rounded-xl py-4 px-8 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border-white/80 bg-black !text-white sticky z-50 border-0">
+    <nav className="w-full max-w-screen-2xl mx-auto rounded-xl py-2 px-8 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border-white/80 bg-black !text-white sticky z-50 border-0">
       <div className="container flex items-center justify-between mx-auto">
-        <p className="block antialiased font-sans text-blue-gray-900 text-lg font-bold">
-         <img className="w-10 h-10" src="/logo.png" alt="" />
-        </p>
+        <Link
+          to={"/dashboard"}
+          className="block antialiased font-sans text-blue-gray-900 text-lg font-bold"
+        >
+          <img className="w-10 h-10" src="/logo.png" alt="Logo" />
+        </Link>
+        <div className="items-center hidden gap-6 lg:flex">
+          <Link to="/cart">
+            <AiOutlineShoppingCart className="w-6 h-6 cursor-pointer" />
+          </Link>
+          <Link to="/wishlist">
+            <AiOutlineHeart className="w-6 h-6 cursor-pointer" />
+          </Link>
 
-        {/* Desktop Navigation */}
-        <ul className="items-center hidden gap-8 ml-10 lg:flex">
-          {navItems.map((item, index) => (
-            <li key={index}>
-              <a
-                href={item.href}
-                className="antialiased font-sans text-base leading-relaxed flex items-center gap-2 font-medium"
-              >
-                {item.icon}
-                {item.name}
-              </a>
-            </li>
-          ))}
-        </ul>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar className="w-7 h-7 cursor-pointer">
+                  <AvatarImage src={user.profileImage} alt={user.name} />
+                  <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <div className="flex items-center gap-3 px-3 pt-3 pb-1">
+                  <Avatar className="w-10 h-10">
+                    <AvatarImage src={user.profileImage} alt={user.name} />
+                    <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="text-sm font-semibold">{user.name}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                  </div>
+                </div>
+                <Separator />
+                <DropdownMenuItem asChild className="px-5">
+                  <Link to="/profile" className="p-2">
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link to="/sign-in">Sign In</Link>
+          )}
 
-        {/* Desktop Buttons */}
-        <div className="items-center hidden gap-4 lg:flex">
-
-          <Link to={"/sign-in"} >Sing In</Link>
-            <ThemeToggle/>
+          <ThemeToggle />
         </div>
 
-        {/* Mobile Sidebar (Sheet) */}
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" className="lg:hidden">
               <AiOutlineMenu className="w-6 h-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-64 bg-white">
-            <div className="p-6">
-              <p className="text-lg font-bold text-gray-900">Menu</p>
-              <ul className="mt-4 space-y-4">
-                {navItems.map((item, index) => (
-                  <li key={index}>
-                    <a
-                      href={item.href}
-                      className="flex items-center gap-2 text-gray-900 hover:text-gray-600"
-                    >
-                      {item.icon}
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+          <SheetContent side="left" className="w-64 bg-background">
+            <div className="pt-6 flex flex-col items-center gap-4">
+              {user && (
+                <>
+                  <Avatar className="w-16 h-16">
+                    <AvatarImage src={user.profileImage} alt={user.name} />
+                    <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                  </Avatar>
+
+                  <p className="text-lg font-semibold">{user.name}</p>
+
+                  <p className="text-sm text-gray-500">{user.email}</p>
+
+                  <Separator className="w-full my-2" />
+
+                  <Link
+                    to="/profile"
+                    className="w-full text-center p-2 rounded-md "
+                  >
+                    Profile
+                  </Link>
+                </>
+              )}
+
+              <ThemeToggle />
             </div>
           </SheetContent>
         </Sheet>
