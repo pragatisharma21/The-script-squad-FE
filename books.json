@@ -1,0 +1,173 @@
+[
+    {
+      "id": 1,
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "description": "A classic novel set in the Roaring Twenties, exploring themes of wealth, love, and the American Dream.",
+      "pdfUrl": "https://example.com/great-gatsby.pdf",
+      "pdfFileId": "file12345",
+      "coverImage": "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180"
+,
+      "coverImageFileId": "image12345",
+      "genre": "Classic",
+      "price": 19.99,
+      "reviews": ["65e123abcde456f78901234a"],
+      "rating": 4.5,
+      "inStock": true,
+      "comments": [
+        {
+          "userId": "65e123abcdef456f78901234b",
+          "commentText": "A timeless masterpiece!",
+          "createdAt": "2024-02-07T12:00:00Z"
+        }
+      ],
+      "available": true
+    },
+    {
+      "id": 2,
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "description": "A science fiction epic about politics, power, and survival on the desert planet Arrakis.",
+      "pdfUrl": "https://example.com/dune.pdf",
+      "pdfFileId": "file67890",
+      "coverImage": "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180"
+,
+      "coverImageFileId": "image67890",
+      "genre": "Science Fiction",
+      "price": 24.99,
+      "reviews": ["65e456abcde456f78901234c"],
+      "rating": 4.8,
+      "inStock": false,
+      "comments": [
+        {
+          "userId": "65e789abcdef456f78901234d",
+          "commentText": "A must-read for sci-fi lovers!",
+          "createdAt": "2024-02-07T13:30:00Z"
+        }
+      ],
+      "available": false
+    },
+    {
+      "id": 3,
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "description": "A witty and romantic novel exploring love, class, and family in 19th-century England.",
+      "pdfUrl": "https://example.com/pride-prejudice.pdf",
+      "pdfFileId": "file78901",
+     "coverImage": "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180"
+,
+      "coverImageFileId": "image78901",
+      "genre": "Romance",
+      "price": 15.99,
+      "reviews": ["65e789abcde456f78901234e"],
+      "rating": 4.7,
+      "inStock": true,
+      "comments": [
+        {
+          "userId": "65e890abcdef456f78901234f",
+          "commentText": "A beautiful love story.",
+          "createdAt": "2024-02-07T14:45:00Z"
+        }
+      ],
+      "available": true
+    },
+    {
+      "id": 4,
+      "title": "1984",
+      "author": "George Orwell",
+      "description": "A chilling vision of a totalitarian future where Big Brother watches every move.",
+      "pdfUrl": "https://example.com/1984.pdf",
+      "pdfFileId": "file89012",
+      "coverImage": "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180"
+,
+      "coverImageFileId": "image89012",
+      "genre": "Dystopian",
+      "price": 18.99,
+      "reviews": ["65e890abcde456f789012350"],
+      "rating": 4.9,
+      "inStock": false,
+      "comments": [
+        {
+          "userId": "65e901abcdef456f789012351",
+          "commentText": "A thought-provoking read.",
+          "createdAt": "2024-02-07T15:10:00Z"
+        }
+      ],
+      "available": false
+    },
+    {
+      "id": 5,
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "description": "A powerful novel about racial injustice and childhood innocence in the Deep South.",
+      "pdfUrl": "https://example.com/to-kill-a-mockingbird.pdf",
+      "pdfFileId": "file90123",
+     "coverImage": "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180"
+,
+      "coverImageFileId": "image90123",
+      "genre": "Classic",
+      "price": 21.99,
+      "reviews": ["65e901abcde456f789012352"],
+      "rating": 4.8,
+      "inStock": true,
+      "comments": [
+        {
+          "userId": "65e012abcdef456f789012353",
+          "commentText": "A moving and beautifully written book.",
+          "createdAt": "2024-02-07T16:00:00Z"
+        }
+      ],
+      "available": true
+    },
+    {
+      "id": 6,
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "description": "An adventurous journey of Bilbo Baggins in the land of Middle-earth.",
+      "pdfUrl": "https://example.com/the-hobbit.pdf",
+      "pdfFileId": "file01234",
+    "coverImage": "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180"
+
+,
+      "coverImageFileId": "image01234",
+      "genre": "Fantasy",
+      "price": 17.99,
+      "reviews": ["65e012abcde456f789012354"],
+      "rating": 4.8,
+      "inStock": true,
+      "comments": [
+        {
+          "userId": "65e123abcdef456f789012355",
+          "commentText": "A great adventure for all ages!",
+          "createdAt": "2024-02-07T17:30:00Z"
+        }
+      ],
+      "available": true
+    },
+    {
+        "id": 7,
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "description": "An adventurous journey of Bilbo Baggins in the land of Middle-earth.",
+        "pdfUrl": "https://example.com/the-hobbit.pdf",
+        "pdfFileId": "file01234",
+        "coverImage": "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180"
+,
+        "coverImageFileId": "image01234",
+        "genre": "Fkll",
+        "price": 17.99,
+        "reviews": ["65e012abcde456f789012354"],
+        "rating": 4.8,
+        "inStock": true,
+        "comments": [
+          {
+            "userId": "65e123abcdef456f789012355",
+            "commentText": "A great adventure for all ages!",
+            "createdAt": "2024-02-07T17:30:00Z"
+          }
+        ],
+        "available": true
+      }
+    ]
+  
+  
