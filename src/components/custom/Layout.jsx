@@ -11,7 +11,7 @@ export default function Layout({ children }) {
   return (
     <>
       {!shouldHideNavbar && (
-        <div className="mt-7 mx-7">
+        <div className="mt-7 px-4">
           <Navbar />
         </div>
       )}
