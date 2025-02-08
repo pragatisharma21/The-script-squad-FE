@@ -6,7 +6,8 @@ import Dashboard from "@/pages/Dashboard";
 import SignUpPage from "@/pages/SignUpPage";
 import Profile from "@/pages/Profile";
 import Cart from "@/pages/Cart";
-import Wishlist from "@/pages/MyWishlist";
+import Wishlist from "@/pages/Wishlist";
+
 
 const AllRoutes = () => {
   return (
@@ -16,7 +17,7 @@ const AllRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
-        {/* <Route path="/profile/:userId" element={<UserProfile />} /> */}
+        
 
         {/* Private Routes */}
         <Route
