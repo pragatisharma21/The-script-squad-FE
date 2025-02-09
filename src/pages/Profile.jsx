@@ -7,9 +7,10 @@ import { useAuth } from "../context/AuthContext";
 import { LogOut } from "lucide-react";
 import { handlePayment } from "@/lib/paymentUtil";
 import { getMyBooks, updateUserProfile } from "@/Api/userService";
-import ProfileTabs from "@/components/custom/profileTabs";
+// import ProfileTabs from "@/components/custom/profileTabs";
 import AddBookModal from "@/components/custom/AddBookModal";
 import { postBook } from "@/Api/bookService";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Profile = () => {
   const { user, logout, fetchUser, userData } = useAuth();
@@ -199,11 +200,52 @@ const Profile = () => {
         />
       </div>
 
-      <ProfileTabs
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        userType={userData?.userType}
-      />
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
+      <TabsList className="sm:space-x-2 flex ">
+        <TabsTrigger
+          value="profile"
+          className={
+            activeTab === "profile"
+              ? "bg-gray-200 sm:text-base text-[10px]"
+              : "sm:text-base text-[10px]"
+          }
+        >
+          Profile
+        </TabsTrigger>
+        <TabsTrigger
+          value="myBooks"
+          className={
+            activeTab === "myBooks"
+              ? "bg-gray-200 sm:text-base text-[10px]"
+              : "sm:text-base text-[10px]"
+          }
+        >
+          My Books
+        </TabsTrigger>
+        {/* <TabsTrigger
+          value="myPosts"
+          className={
+            activeTab === "myPosts"
+              ? "bg-gray-200 sm:text-base text-[10px]"
+              : "sm:text-base text-[10px]"
+          }
+        >
+          My Post
+        </TabsTrigger>
+        {userType === "FLEET_ADMIN" && (
+          <TabsTrigger
+            value="paymentHistory"
+            className={
+              activeTab === "paymentHistory"
+                ? "bg-gray-200 sm:text-base text-[10px]"
+                : "sm:text-base text-[10px]"
+            }
+          >
+            Payment History
+          </TabsTrigger>
+        )} */}
+      </TabsList>
+    </Tabs>
 
       {activeTab === "profile" && (
         <Card>
