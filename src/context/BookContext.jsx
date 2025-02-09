@@ -1,15 +1,8 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-  getMyCart,
-  getMyWishlist,
-  addBookToCart,
-  addBookToWishlist,
-  removeBookFromCart,
-  removeBookFromWishlist,
-} from "@/Api/userService";
-import { useAuth } from "@/context/AuthContext";
 import { getPaginatedBooks } from "@/Api/bookService";
+import { useAuth } from "@/context/AuthContext";
+import { getMyCart, getMyWishlist } from "@/Api/userService";
 
 const BookContext = createContext();
 
@@ -46,7 +39,9 @@ export const BookProvider = ({ children }) => {
   const fetchCart = async () => {
     try {
       const response = await getMyCart(userId);
-      setCart(response?.data?.myCart || []);
+      if(response.data){
+        setCart(response.data.myCart); 
+      }
     } catch (error) {
       console.error("Error fetching cart:", error);
     }
@@ -55,51 +50,11 @@ export const BookProvider = ({ children }) => {
   const fetchWishlist = async () => {
     try {
       const response = await getMyWishlist(userId);
-      setWishlist(response?.data?.myWishList || []);
+      if(response.data){
+        setWishlist(response.data.myWishList); 
+      }
     } catch (error) {
       console.error("Error fetching wishlist:", error);
-    }
-  };
-
-  const addToCart = async (bookId) => {
-    try {
-      const response = await addBookToCart(userId, bookId);
-      if (response.data) {
-        setCart(response.data.myCart || []);
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-    }
-  };
-
-  const removeFromCart = async (bookId) => {
-    try {
-      const response = await removeBookFromCart(userId, bookId);
-      if (response.data) {
-        setCart(response.data.myCart || []);
-      }
-    } catch (error) {
-      console.error("Error removing from cart:", error);
-    }
-  };
-
-  const addToWishlist = async (bookId) => {
-    try {
-      const response = await addBookToWishlist(userId, bookId);
-      if (response.data) {
-        setWishlist(response.data.wishlist || []);
-      }
-    } catch (error) {
-      console.error("Error adding to wishlist:", error);
-    }
-  };
-
-  const removeFromWishlist = async (bookId) => {
-    try {
-      const response = await removeBookFromWishlist(userId, bookId);
-      setWishlist(response?.data?.wishlist || []);
-    } catch (error) {
-      console.error("Error removing from wishlist:", error);
     }
   };
 
@@ -112,13 +67,11 @@ export const BookProvider = ({ children }) => {
         page,
         totalPages,
         setPage,
-        addToCart,
-        addToWishlist,
+        setCart,         // Providing setCart so BookCard can directly update cart state
+        setWishlist,    // Providing setWishlist so BookCard can directly update wishlist state
         fetchBooks,
         fetchCart,
         fetchWishlist,
-        removeFromWishlist,
-        removeFromCart,
       }}
     >
       {children}

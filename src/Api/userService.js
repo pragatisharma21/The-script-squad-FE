@@ -47,12 +47,17 @@ const getMyWishlist = (userId) => {
   return apiClient.get(`/user/wishlist/${userId}`);
 };
 
+const getMyBooks = () => {
+  return apiClient.get("/user/myBooks");
+};
+
 export {
   loginUser,
   signupUser,
   googleSingnupUser,
   getUserProfile,
   updateUserProfile,
+  getMyBooks,
   addBookToCart,
   addBookToWishlist,
   getMyCart,
