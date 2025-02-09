@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import {
   Dialog,
@@ -57,7 +58,7 @@ const AddBookModal = ({ isOpen, onClose, onSave }) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={onClose} >
       <DialogContent className="bg-white p-8 rounded-lg w-full shadow-lg dark:bg-gray-800 dark:text-white">
         <DialogHeader>
           <DialogTitle>Add Book</DialogTitle>

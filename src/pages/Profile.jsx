@@ -191,7 +191,7 @@ const Profile = () => {
       </Card>
 
       <div
-        className={`absolute w-[90%] sm:w-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
+        className={`absolute z-50 w-[90%] sm:w-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
       >
         <AddBookModal
           isOpen={isModalOpen}
