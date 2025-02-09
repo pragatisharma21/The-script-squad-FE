@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
