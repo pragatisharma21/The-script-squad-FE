@@ -27,7 +27,9 @@ const Dashboard = () => {
           <BookCard key={book._id} book={book} cart={cart} wishlist={wishlist} />
         ))}
       </div>
-
+<div>
+  
+</div>
       <div className="flex justify-center mt-6 space-x-4 items-center">
         <Button disabled={page === 1} onClick={() => setPage(page - 1)}> Prev </Button>
         <span className="font-semibold"> {page} / {totalPages} </span>
