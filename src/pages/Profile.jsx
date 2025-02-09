@@ -6,8 +6,10 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "../context/AuthContext";
 import { LogOut } from "lucide-react";
 import { handlePayment } from "@/lib/paymentUtil";
-import { updateUserProfile } from "@/Api/userService";
+import { getMyBooks, updateUserProfile } from "@/Api/userService";
 import ProfileTabs from "@/components/custom/profileTabs";
+import AddBookModal from "@/components/custom/AddBookModal";
+import { postBook } from "@/Api/bookService";
 
 const Profile = () => {
   const { user, logout, fetchUser, userData } = useAuth();
@@ -15,6 +17,21 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(userData?.profileImage);
   const [activeTab, setActiveTab] = useState("profile");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [myBooks, setMyBooks] = useState([]);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSaveBook = async (formData) => {
+    await postBook(formData);
+    handleCloseModal();
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files?.[0];
@@ -31,17 +48,26 @@ const Profile = () => {
   const handleSaveChanges = useCallback(
     async (e) => {
       e.preventDefault();
+
       const formData = new FormData();
       formData.append("name", username);
+
       if (profileImage) {
         formData.append("profileImage", profileImage);
+      } else if (previewImage) {
+        formData.append("profileImage", previewImage);
       }
 
       await updateUserProfile(user.userId, formData);
       await fetchUser(user.userId);
     },
-    [username, profileImage, user, fetchUser]
+    [username, profileImage, previewImage, user, fetchUser]
   );
+
+  const fetchMyBooks = async () => {
+    const res = await getMyBooks();
+    setMyBooks(res.data.books);
+  };
 
   const handleLogout = () => {
     logout();
@@ -49,6 +75,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (userData) {
+      fetchMyBooks();
       setUsername(userData.name || "");
       setPreviewImage(userData.profileImage || user?.profileImage);
     }
@@ -75,10 +102,29 @@ const Profile = () => {
         );
       case "FLEET_ADMIN":
         return (
-          <Button className="rounded-full text-sm py-1 px-2">Add Books</Button>
+          <Button
+            onClick={handleOpenModal}
+            className="rounded-full text-sm py-1 px-2"
+          >
+            Add Books
+          </Button>
         );
       default:
         return null;
+    }
+  };
+
+  const downloadPDF = (bookId) => {
+    const pdfUrl = myBooks.find((book) => book.id === bookId)?.pdfUrl;
+
+    if (pdfUrl) {
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.target = "_blank";
+      link.download = pdfUrl.split("/").pop();
+      link.click();
+    } else {
+      alert("PDF not found.");
     }
   };
 
@@ -143,6 +189,16 @@ const Profile = () => {
         </CardContent>
       </Card>
 
+      <div
+        className={`absolute w-[90%] sm:w-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
+      >
+        <AddBookModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onSave={handleSaveBook}
+        />
+      </div>
+
       <ProfileTabs
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -168,21 +224,60 @@ const Profile = () => {
 
       {activeTab === "myBooks" && (
         <Card>
-          <CardContent className="pt-6">My Books</CardContent>
+          <CardContent className="pt-6">
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold">My Books</h2>
+              {myBooks.length === 0 ? (
+                <p>No books found.</p>
+              ) : (
+                myBooks.map((book) => (
+                  <div
+                    key={book.id}
+                    className="flex flex-col md:flex-row justify-between items-center border-b pb-4 mb-4"
+                  >
+                    <div className="flex-shrink-0 w-24 h-24 mb-4 md:mb-0 md:mr-4">
+                      <img
+                        src={book.coverImage}
+                        alt={book.title}
+                        className="w-full h-full object-cover rounded-md"
+                      />
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold">{book.title}</h3>
+                      <p className="text-sm text-gray-600">
+                        {book.description}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 md:mt-0">
+                      <Button
+                        variant="outline"
+                        onClick={() => downloadPDF(book._id)}
+                        className="w-32"
+                      >
+                        Download PDF
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </CardContent>
         </Card>
       )}
 
-      {activeTab === "myPosts" && (
+      {/* {activeTab === "myPosts" && (
         <Card>
-          <CardContent className="pt-6">My Postsc </CardContent>
+          <CardContent className="pt-6">My Posts</CardContent>
         </Card>
       )}
 
       {activeTab === "paymentHistory" && (
         <Card>
-          <CardContent className="pt-6">Payment </CardContent>
+          <CardContent className="pt-6">Payment History</CardContent>
         </Card>
-      )}
+      )} */}
     </div>
   );
 };

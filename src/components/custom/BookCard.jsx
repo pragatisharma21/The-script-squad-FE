@@ -5,19 +5,59 @@ import { Star } from "lucide-react";
 import { useBook } from "@/context/BookContext";
 import { FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
+import {
+  addBookToCart,
+  addBookToWishlist,
+  removeBookFromCart,
+  removeBookFromWishlist,
+} from "@/Api/userService";
+import { useAuth } from "@/context/AuthContext";
 
 const BookCard = ({ book }) => {
-  const {
-    cart,
-    wishlist,
-    addToCart,
-    removeFromCart,
-    addToWishlist,
-    removeFromWishlist,
-  } = useBook();
+  const { cart, wishlist, setCart, setWishlist } = useBook();
+  const { user } = useAuth();
+  const userId = user?.userId;
 
   const isInCart = cart.some((item) => item._id === book._id);
   const isInWishlist = wishlist.some((item) => item._id === book._id);
+
+  const handleAddToCart = async () => {
+    try {
+      await addBookToCart(userId, book._id);
+      setCart((prevCart) => [...prevCart, book]);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
+  const handleRemoveFromCart = async () => {
+    try {
+      await removeBookFromCart(userId, book._id);
+      setCart((prevCart) => prevCart.filter((item) => item._id !== book._id));
+    } catch (error) {
+      console.error("Error removing from cart:", error);
+    }
+  };
+
+  const handleAddToWishlist = async () => {
+    try {
+      await addBookToWishlist(userId, book._id);
+      setWishlist((prevWishlist) => [...prevWishlist, book]);
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
+    }
+  };
+
+  const handleRemoveFromWishlist = async () => {
+    try {
+      await removeBookFromWishlist(userId, book._id);
+      setWishlist((prevWishlist) =>
+        prevWishlist.filter((item) => item._id !== book._id)
+      );
+    } catch (error) {
+      console.error("Error removing from wishlist:", error);
+    }
+  };
 
   return (
     <Card className="shadow-lg rounded-xl overflow-hidden relative">
@@ -30,7 +70,7 @@ const BookCard = ({ book }) => {
       <div
         className="absolute top-2 right-2 cursor-pointer"
         onClick={() =>
-          isInWishlist ? removeFromWishlist(book._id) : addToWishlist(book._id)
+          isInWishlist ? handleRemoveFromWishlist() : handleAddToWishlist()
         }
       >
         {isInWishlist ? (
@@ -67,14 +107,14 @@ const BookCard = ({ book }) => {
           {isInCart ? (
             <Button
               className="w-full mt-3 bg-red-500 hover:bg-red-600"
-              onClick={() => removeFromCart(book._id)}
+              onClick={handleRemoveFromCart}
             >
               Remove from Cart
             </Button>
           ) : (
             <Button
               className="w-full mt-3 bg-indigo-600 hover:bg-indigo-700"
-              onClick={() => addToCart(book._id)}
+              onClick={handleAddToCart}
             >
               Add to Cart
             </Button>

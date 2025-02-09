@@ -25,7 +25,7 @@ const ProfileTabs = ({ activeTab, setActiveTab, userType }) => {
         >
           My Books
         </TabsTrigger>
-        <TabsTrigger
+        {/* <TabsTrigger
           value="myPosts"
           className={
             activeTab === "myPosts"
@@ -46,7 +46,7 @@ const ProfileTabs = ({ activeTab, setActiveTab, userType }) => {
           >
             Payment History
           </TabsTrigger>
-        )}
+        )} */}
       </TabsList>
     </Tabs>
   );

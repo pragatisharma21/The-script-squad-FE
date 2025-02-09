@@ -22,7 +22,6 @@ const Navbar = () => {
   const { user, userData, logout } = useAuth();
   const [userFields, setUserFields] = useState({});
 
-  console.log(userData)
   useEffect(()=>{
     if(userData){
       setUserFields(userData)

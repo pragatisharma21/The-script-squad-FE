@@ -11,8 +11,7 @@ export const handlePayment = async (
 ) => {
   try {
     const amount = paymentType === "FLEET_ADMIN" ? 1 : totalAmount;
-    const books =
-      paymentType === "BOOK_PURCHASE" ? cart.map((book) => book.id) : [];
+    const books = paymentType === "BOOK_PURCHASE" ? cart : [];
 
     const { data } = await createOrder(userId, amount, books, paymentType);
 
@@ -37,9 +36,9 @@ export const handlePayment = async (
           paymentType,
         });
 
-       if(fetchUser){
-        await fetchUser(userId)
-       }
+        if (fetchUser) {
+          await fetchUser(userId);
+        }
 
         alert("Payment successful!");
         if (paymentType === "BOOK_PURCHASE") setCart([]);

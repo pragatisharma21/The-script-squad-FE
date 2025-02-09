@@ -11,7 +11,7 @@ import { BookProvider } from "./context/BookContext";
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <ThemeProvider>
       <BrowserRouter>
         <AuthProvider>
@@ -23,5 +23,5 @@ createRoot(document.getElementById("root")).render(
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
-  </StrictMode>
+  // </StrictMode>
 );
