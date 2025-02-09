@@ -8,12 +8,36 @@ const signupUser = (data) => {
   return apiClient.post("/user/signup", data);
 };
 
-const googleSingnupUser = (token)=>{
-  return apiClient.post("/user/googleSignup", {token})
-}
+const googleSingnupUser = (token) => {
+  return apiClient.post("/user/googleSignup", { token });
+};
 
-const getUserProfile = (userId)=> {
+const getUserProfile = (userId) => {
   return apiClient.get(`/user/profile/${userId}`);
-}
+};
 
-export { loginUser, signupUser, googleSingnupUser, getUserProfile };
+const addBookToCart = (userId, bookId) => {
+  return apiClient.post(`/add-to-cart/${userId}/${bookId}`);
+};
+
+const addBookToWishlist = (userId, bookId) => {
+  return apiClient.post(`/add-to-wishlist/${userId}/${bookId}`);
+};
+
+const getMyCart = (userId) => {
+  return apiClient.get(`/cart/${userId}`);
+};
+const getMyWishlist = (userId) => {
+  return apiClient.get(`/wishlist/${userId}`);
+};
+
+export {
+  loginUser,
+  signupUser,
+  googleSingnupUser,
+  getUserProfile,
+  addBookToCart,
+  addBookToWishlist,
+  getMyCart,
+  getMyWishlist,
+};
