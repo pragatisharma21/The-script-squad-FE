@@ -16,14 +16,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const { user, userData } = useAuth();
+  const { user, userData, logout } = useAuth();
+  const [userFields, setUserFields] = useState({});
 
   console.log(userData)
+  useEffect(()=>{
+    if(userData){
+      setUserFields(userData)
+    }
+  },[userData])
 
   return (
-    <nav className="w-full max-w-screen-2xl mx-auto rounded-xl py-2 px-8 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border-white/80 bg-black !text-white sticky z-50 border-0">
+    <nav className="w-full mx-auto rounded-xl py-2 px-8 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80  border  bg-black !text-white sticky z-50 ">
       <div className="container flex items-center justify-between mx-auto">
         <Link
           to={"/dashboard"}
@@ -32,30 +39,39 @@ const Navbar = () => {
           <img className="w-10 h-10" src="/logo.png" alt="Logo" />
         </Link>
         <div className="items-center hidden gap-6 lg:flex">
-          <Link to="/cart">
-            <AiOutlineShoppingCart className="w-6 h-6 cursor-pointer" />
-          </Link>
-          <Link to="/wishlist">
-            <AiOutlineHeart className="w-6 h-6 cursor-pointer" />
-          </Link>
+          {user &&
+            (userData?.userType !== "ADMIN" ? (
+              <>
+                <Link to="/cart">
+                  <AiOutlineShoppingCart className="w-6 h-6 cursor-pointer" />
+                </Link>
+                <Link to="/wishlist">
+                  <AiOutlineHeart className="w-6 h-6 cursor-pointer" />
+                </Link>
+              </>
+            ) : (
+              <div onClick={() => logout()} className="cursor-pointer">
+                <p>Sign Out</p>
+              </div>
+            ))}
 
-          {user ? (
+          {user && userData ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar className="w-7 h-7 cursor-pointer">
-                  <AvatarImage src={user.profileImage} alt={user.name} />
-                  <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                  <AvatarImage src={userFields.profileImage} alt={userFields.name} />
+                  <AvatarFallback>{userFields.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <div className="flex items-center gap-3 px-3 pt-3 pb-1">
                   <Avatar className="w-10 h-10">
-                    <AvatarImage src={user.profileImage} alt={user.name} />
-                    <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                    <AvatarImage src={userFields.profileImage} alt={userFields.name} />
+                    <AvatarFallback>{userFields.name?.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-sm font-semibold">{user.name}</p>
-                    <p className="text-xs text-gray-500">{user.email}</p>
+                    <p className="text-sm font-semibold">{userFields.name}</p>
+                    <p className="text-xs text-gray-500">{userFields.email}</p>
                   </div>
                 </div>
                 <Separator />
@@ -81,25 +97,28 @@ const Navbar = () => {
           </SheetTrigger>
           <SheetContent side="left" className="w-64 bg-background">
             <div className="pt-6 flex flex-col items-center gap-4">
-              {user && (
+              {user && userData && (
                 <>
                   <Avatar className="w-16 h-16">
-                    <AvatarImage src={user.profileImage} alt={user.name} />
-                    <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                    <AvatarImage src={userFields.profileImage} alt={userFields.name} />
+                    <AvatarFallback>{userFields.name?.charAt(0)}</AvatarFallback>
                   </Avatar>
 
-                  <p className="text-lg font-semibold">{user.name}</p>
-
-                  <p className="text-sm text-gray-500">{user.email}</p>
+                  <p className="text-lg font-semibold">{userFields.name}</p>
+                  <p className="text-sm text-gray-500">{userFields.email}</p>
 
                   <Separator className="w-full my-2" />
 
                   <Link
                     to="/profile"
-                    className="w-full text-center p-2 rounded-md "
+                    className="w-full text-center p-2 rounded-md"
                   >
                     Profile
                   </Link>
+
+                  <button className="w-full text-center p-2 rounded-md">
+                    Sign Out
+                  </button>
                 </>
               )}
 

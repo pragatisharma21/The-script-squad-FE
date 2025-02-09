@@ -1,13 +1,28 @@
 /* eslint-disable react/prop-types */
-import { useAuth } from "@/context/AuthContext";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, userData, loading } = useAuth();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  return user ? children : <Navigate to="/" />;
+  if (!user) {
+    return <Navigate to="/sign-in" />;
+  }
+
+  if (
+    userData?.userType &&
+    userData.userType !== "DEFAULT" &&
+    userData.userType !== "FLEET_ADMIN" &&
+    userData.userType !== "FLEET_PENDING"
+  ) {
+    return <Navigate to="/adminDashboard" />;
+  }
+
+  return children;
 };
 
 export default PrivateRoute;

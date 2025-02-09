@@ -9,13 +9,13 @@ export default function Layout({ children }) {
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
-    <>
+    <div className="md:px-16 px-4">
       {!shouldHideNavbar && (
-        <div className="mt-7 px-4">
+        <div className="mt-7">
           <Navbar />
         </div>
       )}
       <main>{children}</main>
-    </>
+    </div>
   );
 }

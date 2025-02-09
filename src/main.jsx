@@ -6,19 +6,22 @@ import { BrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ThemeProvider } from "./context/ThemeProvider";
 import { AuthProvider } from "./context/AuthContext";
+import { BookProvider } from "./context/BookContext";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
-      <AuthProvider>
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </GoogleOAuthProvider>
-      </AuthProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <BookProvider>
+            <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+              <App />
+            </GoogleOAuthProvider>
+          </BookProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </ThemeProvider>
   </StrictMode>
 );

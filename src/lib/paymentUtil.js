@@ -6,7 +6,8 @@ export const handlePayment = async (
   paymentType,
   cart,
   totalAmount,
-  setCart
+  setCart,
+  fetchUser = null
 ) => {
   try {
     const amount = paymentType === "FLEET_ADMIN" ? 1 : totalAmount;
@@ -35,6 +36,10 @@ export const handlePayment = async (
           totalAmount: amount,
           paymentType,
         });
+
+       if(fetchUser){
+        await fetchUser(userId)
+       }
 
         alert("Payment successful!");
         if (paymentType === "BOOK_PURCHASE") setCart([]);
