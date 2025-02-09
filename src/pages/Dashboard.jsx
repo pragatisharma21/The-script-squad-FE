@@ -1,136 +1,45 @@
 import { useState, useEffect } from "react";
-import { useTheme } from "@/context/ThemeProvider";
-import {
-  Search,
-  ShoppingCart,
-  Star,
-  Heart,
-  BookOpen,
-  SortAsc,
-  SortDesc,
-} from "lucide-react";
-import { debounce } from "lodash";
-
-const sampleBooks = [
-  {
-    id: 1,
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    price: 19.99,
-    rating: 4.5,
-    genre: "Classic",
-    description:
-      "A timeless tale of wealth, ambition, and love in the Roaring Twenties.",
-    inStock: true,
-    image:
-      "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180",
-  },
-  {
-    id: 2,
-    title: "Dune",
-    author: "Frank Herbert",
-    price: 24.99,
-    rating: 4.8,
-    genre: "Science Fiction",
-    description:
-      "A gripping sci-fi epic about power, politics, and destiny on the desert planet Arrakis.",
-    inStock: true,
-    image:
-      "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180",
-  },
-  {
-    id: 3,
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    price: 15.99,
-    rating: 4.7,
-    genre: "Romance",
-    description:
-      "A witty and romantic novel exploring love, class, and family in 19th-century England.",
-    inStock: false,
-    image:
-      "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180",
-  },
-  {
-    id: 4,
-    title: "1984",
-    author: "George Orwell",
-    price: 18.99,
-    rating: 4.9,
-    genre: "Dystopian",
-    description:
-      "A chilling vision of a totalitarian future where Big Brother watches every move.",
-    inStock: true,
-    image:
-      "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180",
-  },
-  {
-    id: 5,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    price: 21.99,
-    rating: 4.8,
-    genre: "Classic",
-    description:
-      "A powerful novel about racial injustice and childhood innocence in the Deep South.",
-    inStock: true,
-    image:
-      "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180",
-  },
-  {
-    id: 6,
-    title: "The Hobbit",
-    author: "J.R.R. Tolkien",
-    price: 17.99,
-    rating: 4.8,
-    genre: "Fantasy",
-    description:
-      "An adventurous journey of Bilbo Baggins in the land of Middle-earth.",
-    inStock: false,
-    image:
-      "https://tse3.mm.bing.net/th?id=OIP.mxb2csAYPZtO6h5G3S6HAgHaE8&pid=Api&P=0&h=180",
-  },
-];
-
-const genres = [
-  "All",
-  "Classic",
-  "Science Fiction",
-  "Romance",
-  "Mystery",
-  "Fantasy",
-];
+import { Search, SortAsc, SortDesc } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import BookCard from "@/components/custom/BookCard";
+import { getPaginatedBooks } from "@/Api/bookService";
 
 const Dashboard = () => {
-  const { theme } = useTheme();
-  const [books, setBooks] = useState(sampleBooks);
+  const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("All");
   const [sortOrder, setSortOrder] = useState("asc");
   const [cart, setCart] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  
+  useEffect(() => {
+    fetchBooks(page);
+  }, [page]);
 
-  const openBookPopup = (book) => {
-    setSelectedBook(book);
+  const fetchBooks = async (pageNumber) => {
+    try {
+      const response = await getPaginatedBooks(pageNumber, 10);
+      if (response.data.success) {
+        setBooks(response.data.books);
+        setTotalPages(response.data.pagination.totalPages);
+      }
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
   };
 
-  const closeBookPopup = () => {
-    setSelectedBook(null);
-  };
-
-  const debouncedSearch = debounce((term) => {
-    const filtered = sampleBooks.filter(
-      (book) =>
-        book.title.toLowerCase().includes(term.toLowerCase()) ||
-        book.author.toLowerCase().includes(term.toLowerCase())
-    );
-    setBooks(filtered);
-  }, 300);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log(searchTerm)
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    debouncedSearch(e.target.value);
   };
 
   const toggleFavorite = (bookId) => {
@@ -160,7 +69,7 @@ const Dashboard = () => {
       sortOrder === "asc" ? a.price - b.price : b.price - a.price
     );
     setBooks(filtered);
-  }, [selectedGenre, sortOrder, searchTerm]);
+  }, [selectedGenre, sortOrder]);
 
   const addToCart = (book) => {
     setCart((prev) => [...prev, book]);
@@ -180,49 +89,18 @@ const Dashboard = () => {
     ));
 
   return (
-    <>
-      <div
-        className={`min-h-screen bg-background text-foreground ${
-          theme === "dark" ? "dark" : ""
-        }`}
-      >
-        {/* Header */}
-        <div className="bg-card shadow-lg">
-          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <BookOpen className="h-8 w-8 text-indigo-600 dark:text-white" />
-              <h1 className="text-3xl font-bold"> Libraya Store</h1>
-              {/* 📚 */}
-            </div>
-            <div className="flex items-center gap-4">
-              {/* <ThemeToggle /> */}
-              <div className="relative">
-                <ShoppingCart className="h-6 w-6 text-gray-600 dark:text-white cursor-pointer hover:text-indigo-600" />
-                {cart.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs animate-bounce">
-                    {cart.length}
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto px-4 py-6 flex justify-center flex-col md:flex-row gap-4 items-center">
+        <div className="flex w-full  items-center border border-gray-300 rounded-lg px-3 h-12">
+          <Search className="h-5 w-5 text-gray-500" />
+          <Input
+            type="text"
+            className="border-none focus:ring-0 px-3 w-full"
+            placeholder="Search books..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
         </div>
-
-        {/* Search and Filter Section */}
-        <div className="container mx-auto px-2 py-5 flex flex-col md:flex-row gap-4">
-          {/* Search Bar - Full width on mobile, 70% on larger screens */}
-          <div className="w-full md:w-[70%]">
-            <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex items-center gap-4">
-              <Search className="h-6 w-6 text-gray-500 dark:text-gray-300" />
-              <input
-                type="text"
-                placeholder="Search books..."
-                className="w-full px-4 py-2  focus:ring-0 bg-transparent text-gray-900 dark:text-white  border border-red-800 dark:border-none"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-            </div>
-          </div>
 
           {/* Filter Section - Stacks below search bar on mobile, side-by-side on larger screens */}
           <div className="w-full md:w-[30%] flex flex-wrap">
@@ -232,7 +110,7 @@ const Dashboard = () => {
                 <h3 className="text-sm font-semibold">Genre</h3>
                 <select
                   onChange={(e) => setSelectedGenre(e.target.value)}
-                  className="border rounded-md bg-gray-50 dark:bg-gray-700 px-3 py-2 w-full md:w-auto   border-red-800 dark:border-none"
+                  className="border rounded-md bg-gray-50 dark:bg-gray-700 px-3 py-2 w-full md:w-auto border  border-red-800 dark:border-none"
                 >
                   {genres.map((genre) => (
                     <option key={genre} value={genre}>
@@ -265,7 +143,7 @@ const Dashboard = () => {
           {books.map((book) => (
             <div
               key={book.id}
-              className="bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-lg transition-all p-4  border border-red-800 dark:border-white cursor-pointer hover:text-indigo-600  duration-300 hover:scale-110"
+              className="bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-lg transition-all p-4  border border-red-800 dark:border-white cursor-pointer hover:text-indigo-600 transition-transform duration-300 hover:scale-110"
             >
               <div className="relative">
                 <img
@@ -439,7 +317,7 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
