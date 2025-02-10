@@ -62,5 +62,13 @@ Track Purchased Books
 
 4.Admins can update book stock and availability.
 
+# Setup instruction 
+
+Use the code below to install dependencies
+```jsx
+npm install
+```
+
+
 
 
