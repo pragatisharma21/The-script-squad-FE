@@ -46,7 +46,7 @@ This is a full-stack web application that allows users to browse and purchase bo
 **Full-Stack Web Application**
 
 ## Deployment Link
-The project is live at: [Bookstore Application](https://the-script-squad-fe.vercel.app/dashboard)
+The project is live at: [Bookstore Application](https://the-script-squad-fe.vercel.app)
 
 ---
 
