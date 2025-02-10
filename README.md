@@ -56,7 +56,6 @@ The project is live at: [Bookstore Application](https://the-script-squad-fe.verc
 - **Backend**: MongoDB
 - **Authentication**: Google OAuth
 - **Payments**: Razorpay
-- **HTTP Requests**: Axios
 
 ---
 
@@ -78,7 +77,7 @@ The project is live at: [Bookstore Application](https://the-script-squad-fe.verc
 ## Team Credits
 **Team Name**: The Script Squad  
 **Members**:
-- Karan Chauhan
+- Pragati Sharma
 - Hani Thakkar
 - Sandeep
 - Kenche Bala Dattu
