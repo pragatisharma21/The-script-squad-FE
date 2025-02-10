@@ -116,15 +116,13 @@ The project is live at: [Bookstore Application](https://the-script-squad-fe.verc
 ---
 
 ## Screenshots
-1. **Google Login**: ![image](https://github.com/user-attachments/assets/c1cbe546-d3cd-477d-bf32-7b5f5146cd8d)
+1. **Google Login**:   ![image](https://github.com/user-attachments/assets/c1cbe546-d3cd-477d-bf32-7b5f5146cd8d)
 ---------------------------------------------------
-2. **Book Purchase**: ![image](https://github.com/user-attachments/assets/ca3aad15-d805-4c9d-81c0-a62a00e35e82)
+2. **Book Purchase**:   ![image](https://github.com/user-attachments/assets/ca3aad15-d805-4c9d-81c0-a62a00e35e82)
 ![image](https://github.com/user-attachments/assets/40fea042-cee6-4c57-b6b9-fd722f20f3a3)
 ---------------------------------------------------
-3. **Admin Panel**:![image](https://github.com/user-attachments/assets/278412ba-4b36-4846-8b1a-79a966db21f3)
+3. **Admin Panel**:   ![image](https://github.com/user-attachments/assets/278412ba-4b36-4846-8b1a-79a966db21f3)
 ---------------------------------------------------
-
----
 
 ## Future Scope
 - **Advanced Search and Filter**: Implementing a robust search system to enhance book discovery.
