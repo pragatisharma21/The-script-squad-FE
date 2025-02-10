@@ -63,7 +63,7 @@ The project is live at: [Bookstore Application](https://the-script-squad-fe.verc
 1. Clone the repository.
 2. Run `npm install` to install dependencies.
 3. Add your environment variables in the `.env` file (e.g., MongoDB URI, Razorpay keys, Google OAuth credentials).
-4. Start the development server using `npm start`.
+4. Start the development server using `npm run dev`.
 
 ---
 
