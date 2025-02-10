@@ -2,8 +2,9 @@
 Script Squad is a full-stack e-commerce platform where users can browse, purchase, and manage books seamlessly. Built with MERN stack (MongoDB, Express.js, React, Node.js), it offers user authentication, book management, and a smooth checkout process using Razorpay for payments.
 
 🚀 Live Demo
-🔗 Frontend Live Link
-🔗 Backend Live Link
+https://the-script-squad-fe.vercel.app
+https://the-script-squad-be.onrender.com/api
+
 
 🛠 Tech Stack
 Frontend:
@@ -18,7 +19,7 @@ Node.js
 Express.js
 MongoDB & Mongoose
 JWT Authentication
-Cloudinary (for book images)
+ImageKit(for book images)
 Razorpay (for payments)
 ⚡ Features
 🛒 User Features
@@ -47,17 +48,7 @@ Edit
 cd backend
 npm install
 npm start
-📌 Environment Variables (.env)
 
-ini
-Copy
-Edit
-PORT=5000
-MONGO_URI=your_mongodb_url
-JWT_SECRET=your_jwt_secret
-RAZORPAY_KEY_ID=your_key
-RAZORPAY_KEY_SECRET=your_secret
-CLOUDINARY_URL=your_cloudinary_url
 3️⃣ Frontend Setup
 sh
 Copy
