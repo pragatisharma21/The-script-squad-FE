@@ -11,8 +11,8 @@ import { handlePayment } from "@/lib/paymentUtil";
 
 const Cart = () => {
   const { user } = useAuth();
-  const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { cart, setCart } = useBook();
 
   useEffect(() => {
     if (user?.userId) {
@@ -47,7 +47,13 @@ const Cart = () => {
   const handleBookPurchase = async () => {
     try {
       const totalAmount = cart.reduce((sum, book) => sum + book.price, 0);
-      await handlePayment(user.userId, "BOOK_PURCHASE", cart, totalAmount, setCart);
+      await handlePayment(
+        user.userId,
+        "BOOK_PURCHASE",
+        cart,
+        totalAmount,
+        setCart
+      );
     } catch (error) {
       console.error("Error during payment:", error);
       toast.error(error.message || "Payment failed");
@@ -59,26 +65,29 @@ const Cart = () => {
 
   return (
     <div className="mx-auto py-4 flex sm:flex-row-reverse flex-col  gap-6">
-      <div className="p-6 rounded-lg border shadow-md space-y-4 lg:w-1/3">
-        <h2 className="text-xl font-bold">Cart Summary</h2>
-        <Separator />
-        <p className="flex justify-between">
-          <span>Total Items:</span> <span>{totalItems}</span>
-        </p>
-        <p className="flex justify-between font-semibold">
-          <span>Total Price:</span> <span>₹{totalPrice}</span>
-        </p>
-        <Button
-          className="w-full mt-2"
-          disabled={cart.length === 0}
-          onClick={() => handleBookPurchase()}
-        >
-          Proceed to Buy
-        </Button>
-      </div>
+      {totalItems > 0 ? (
+        <div className="p-6 rounded-lg border shadow-md space-y-4 lg:w-1/3">
+          <h2 className="text-xl font-bold">Cart Summary</h2>
+          <Separator />
+          <p className="flex justify-between">
+            <span>Total Items:</span> <span>{totalItems}</span>
+          </p>
+          <p className="flex justify-between font-semibold">
+            <span>Total Price:</span> <span>₹{totalPrice}</span>
+          </p>
+          <Button
+            className="w-full mt-2"
+            disabled={cart.length === 0}
+            onClick={() => handleBookPurchase()}
+          >
+            Proceed to Buy
+          </Button>
+        </div>
+      ) : (
+        ""
+      )}
 
-      {/* Books List Section (Now Below on Mobile) */}
-      <div className="space-y-4 lg:w-2/3">
+      <div className={`space-y-4 ${totalItems > 0 ? "lg:w-2/3": "w-full"}`}>
         {loading ? (
           Array.from({ length: 3 }).map((_, idx) => (
             <Skeleton key={idx} className="h-24 w-full rounded-lg" />

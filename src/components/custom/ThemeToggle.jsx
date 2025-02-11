@@ -1,15 +1,19 @@
+/* eslint-disable react/prop-types */
 import { useTheme } from "@/context/ThemeProvider";
 import { FiMoon, FiSun } from "react-icons/fi";
 
-const ThemeToggle = () => {
+const ThemeToggle = ({ text = "" }) => {
   const { theme, toggleTheme } = useTheme();
   return (
-    <button
+    <div
       onClick={toggleTheme}
-      className="p-1 rounded-full bg-secondary text-secondary-foreground hover:bg-muted transition"
+      className="flex justify-center items-center gap-2"
     >
-      {theme === "dark" ? <FiSun size={22} /> : <FiMoon size={22} />}
-    </button>
+      <button className="p-1 rounded-full bg-secondary  text-secondary-foreground hover:bg-muted transition">
+        {theme === "dark" ? <FiSun size={22} /> : <FiMoon size={22} />}
+      </button>
+      {text}
+    </div>
   );
 };
 

@@ -26,7 +26,7 @@ export const BookProvider = ({ children }) => {
 
   const fetchBooks = async (pageNumber) => {
     try {
-      const response = await getPaginatedBooks(pageNumber, 10);
+      const response = await getPaginatedBooks(pageNumber, 8);
       if (response.data.success) {
         setBooks(response.data.books || []);
         setTotalPages(response.data.pagination.totalPages);

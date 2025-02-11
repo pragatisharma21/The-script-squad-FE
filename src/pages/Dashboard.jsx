@@ -39,7 +39,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto px-4 py-6 flex justify-center flex-col md:flex-row gap-4 items-center">
+      <div className="mx-auto sm:px-4 py-6 flex justify-center sm:flex-col md:flex-row sm:gap-4 items-center">
         <div className="flex w-full items-center border border-gray-300 rounded-lg px-3 h-12">
           <Search className="h-5 w-5 text-gray-500" />
           <Input
@@ -66,7 +66,7 @@ const Dashboard = () => {
         </Button>
       </div>
 
-      <div className="mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="mx-auto sm:px-4  py-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {filteredBooks.map((book) => (
           <BookCard
             key={book._id}

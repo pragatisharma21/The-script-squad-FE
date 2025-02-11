@@ -11,6 +11,7 @@ import { getMyBooks, updateUserProfile } from "@/Api/userService";
 import AddBookModal from "@/components/custom/AddBookModal";
 import { postBook } from "@/Api/bookService";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const { user, logout, fetchUser, userData } = useAuth();
@@ -20,6 +21,7 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [myBooks, setMyBooks] = useState([]);
+  const [isPosting, setIsPosting] = useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -30,8 +32,17 @@ const Profile = () => {
   };
 
   const handleSaveBook = async (formData) => {
-    await postBook(formData);
+    try {
+      setIsPosting(true);
+      const res = await postBook(formData);
+      if (res.status === 201) {
+        toast.success("Book posted");
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
     handleCloseModal();
+    setIsPosting(false);
   };
 
   const handleImageUpload = (event) => {
@@ -105,9 +116,11 @@ const Profile = () => {
         return (
           <Button
             onClick={handleOpenModal}
-            className="rounded-full text-sm py-1 px-2"
+            className={`rounded-full ${
+              isPosting ? "bg-orange-500" : ""
+            } sm:text-sm text-xs sm:py-1 sm:px-2 px-1`}
           >
-            Add Books
+            {isPosting ? "Adding Book" : "Add Books"}
           </Button>
         );
       default:
@@ -125,7 +138,7 @@ const Profile = () => {
       link.download = pdfUrl.split("/").pop();
       link.click();
     } else {
-      alert("PDF not found.");
+      toast.error("PDF not found.");
     }
   };
 
@@ -134,7 +147,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="p-4 mx-auto">
+    <div className="py-4  mx-auto">
       <Card className="mb-6 relative">
         <CardContent className="pt-7">
           <div className="flex flex-col md:flex-row items-center gap-6 mt-3">
@@ -201,28 +214,28 @@ const Profile = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
-      <TabsList className="sm:space-x-2 flex ">
-        <TabsTrigger
-          value="profile"
-          className={
-            activeTab === "profile"
-              ? "bg-gray-200 sm:text-base text-[10px]"
-              : "sm:text-base text-[10px]"
-          }
-        >
-          Profile
-        </TabsTrigger>
-        <TabsTrigger
-          value="myBooks"
-          className={
-            activeTab === "myBooks"
-              ? "bg-gray-200 sm:text-base text-[10px]"
-              : "sm:text-base text-[10px]"
-          }
-        >
-          My Books
-        </TabsTrigger>
-        {/* <TabsTrigger
+        <TabsList className="sm:space-x-2 flex ">
+          <TabsTrigger
+            value="profile"
+            className={
+              activeTab === "profile"
+                ? "bg-gray-200 sm:text-base text-[10px]"
+                : "sm:text-base text-[10px]"
+            }
+          >
+            Profile
+          </TabsTrigger>
+          <TabsTrigger
+            value="myBooks"
+            className={
+              activeTab === "myBooks"
+                ? "bg-gray-200 sm:text-base text-[10px]"
+                : "sm:text-base text-[10px]"
+            }
+          >
+            My Books
+          </TabsTrigger>
+          {/* <TabsTrigger
           value="myPosts"
           className={
             activeTab === "myPosts"
@@ -244,8 +257,8 @@ const Profile = () => {
             Payment History
           </TabsTrigger>
         )} */}
-      </TabsList>
-    </Tabs>
+        </TabsList>
+      </Tabs>
 
       {activeTab === "profile" && (
         <Card>

@@ -1,4 +1,5 @@
 import { createOrder, verifyPayment } from "@/Api/paymentService";
+import { toast } from "react-toastify";
 // import Razorpay from "razorpay";
 
 export const handlePayment = async (
@@ -40,7 +41,7 @@ export const handlePayment = async (
           await fetchUser(userId);
         }
 
-        alert("Payment successful!");
+        toast.success("Payment successful!");
         if (paymentType === "BOOK_PURCHASE") setCart([]);
       },
       theme: { color: "#F37254" },
@@ -50,6 +51,6 @@ export const handlePayment = async (
     razorpay.open();
   } catch (error) {
     console.error("Payment Error:", error);
-    alert("Payment failed!");
+    toast.error("Payment failed!");
   }
 };
