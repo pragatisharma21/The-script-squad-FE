@@ -82,7 +82,7 @@ export default function SignUpPage() {
           <div className="flex justify-center py-4">
             <GoogleLogin
               onSuccess={handleGoogleLogin}
-              onError={() => console.log("Google login failed")}
+              onError={() => toast.error("Google login failed")}
             />
           </div>
           <div className="flex justify-center items-center flex-col mb-4">

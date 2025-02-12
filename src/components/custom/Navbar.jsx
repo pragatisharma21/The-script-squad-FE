@@ -21,10 +21,19 @@ import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { useBook } from "@/context/BookContext";
 import { CiLogout } from "react-icons/ci";
+import { FiLogIn } from "react-icons/fi";
 
 const NAV_ITEMS = [
-  { name: "Home", path: "/dashboard", icon: <AiOutlineHome className="w-6 h-6" /> },
-  { name: "Wishlist", path: "/wishlist", icon: <AiOutlineHeart className="w-6 h-6" /> },
+  {
+    name: "Home",
+    path: "/dashboard",
+    icon: <AiOutlineHome className="w-6 h-6" />,
+  },
+  {
+    name: "Wishlist",
+    path: "/wishlist",
+    icon: <AiOutlineHeart className="w-6 h-6" />,
+  },
 ];
 
 const Navbar = () => {
@@ -47,11 +56,14 @@ const Navbar = () => {
 
         {/* Desktop Nav Items */}
         <div className="items-center hidden gap-6 lg:flex relative">
-          {user && userData?.userType !== "ADMIN" &&
+          {user &&
+            userData?.userType !== "ADMIN" &&
             NAV_ITEMS.map((item) => (
-              <Link key={item.name} to={item.path}>{item.icon}</Link>
+              <Link key={item.name} to={item.path}>
+                {item.icon}
+              </Link>
             ))}
-          
+
           {/* Cart Icon with Badge */}
           {user && userData?.userType !== "ADMIN" && (
             <Link to="/cart" className="relative">
@@ -68,15 +80,23 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar className="w-7 h-7 cursor-pointer">
-                  <AvatarImage src={userFields.profileImage} alt={userFields.name} />
+                  <AvatarImage
+                    src={userFields.profileImage}
+                    alt={userFields.name}
+                  />
                   <AvatarFallback>{userFields.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <div className="flex items-center gap-3 px-3 pt-3 pb-1">
                   <Avatar className="w-10 h-10">
-                    <AvatarImage src={userFields.profileImage} alt={userFields.name} />
-                    <AvatarFallback>{userFields.name?.charAt(0)}</AvatarFallback>
+                    <AvatarImage
+                      src={userFields.profileImage}
+                      alt={userFields.name}
+                    />
+                    <AvatarFallback>
+                      {userFields.name?.charAt(0)}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="text-sm font-semibold">{userFields.name}</p>
@@ -85,7 +105,9 @@ const Navbar = () => {
                 </div>
                 <Separator />
                 <DropdownMenuItem asChild className="px-5 py-2">
-                  <Link to="/profile" className="p-2">Profile</Link>
+                  <Link to="/profile" className="p-2">
+                    Profile
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -105,36 +127,64 @@ const Navbar = () => {
           </SheetTrigger>
           <SheetContent side="left" className="w-64 bg-background">
             <div className="pt-6 flex flex-col items-start gap-4">
-              {user && userData && (
+              {user && userData ? (
                 <>
                   <div className="flex flex-col justify-center w-full items-center gap-2">
                     <Avatar className="w-16 h-16">
-                      <AvatarImage src={userFields.profileImage} alt={userFields.name} />
-                      <AvatarFallback>{userFields.name?.charAt(0)}</AvatarFallback>
+                      <AvatarImage
+                        src={userFields.profileImage}
+                        alt={userFields.name}
+                      />
+                      <AvatarFallback>
+                        {userFields.name?.charAt(0)}
+                      </AvatarFallback>
                     </Avatar>
                     <p className="text-lg font-semibold">{userFields.name}</p>
                     <p className="text-sm text-gray-500">{userFields.email}</p>
                   </div>
                   <Separator className="w-full my-2" />
                   {NAV_ITEMS.map((item) => (
-                    <Link key={item.name} to={item.path} className="flex items-center gap-2 p-2 rounded-md">
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className="flex items-center gap-2 p-2 rounded-md"
+                    >
                       {item.icon} {item.name}
                     </Link>
                   ))}
-                  <Link to="/cart" className="flex items-center gap-2 p-2 rounded-md">
-                    <AiOutlineShoppingCart className="text-2xl" /> Cart ({cart.length})
+                  <Link
+                    to="/cart"
+                    className="flex items-center gap-2 p-2 rounded-md"
+                  >
+                    <AiOutlineShoppingCart className="text-2xl" /> Cart (
+                    {cart.length})
                   </Link>
-                  <Link to="/profile" className="flex items-center gap-2 p-2 rounded-md">
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-2 p-2 rounded-md"
+                  >
                     <PiUserCircleLight className="text-2xl" /> Profile
                   </Link>
-                  <div onClick={() => logout()} className="cursor-pointer p-2 flex items-center gap-2">
-                  <CiLogout className="text-2xl" /> Sign Out
+                  <div
+                    onClick={() => logout()}
+                    className="cursor-pointer p-2 flex items-center gap-2"
+                  >
+                    <CiLogout className="text-2xl" /> Sign Out
                   </div>
                 </>
+              ) : (
+                <>
+                  <Link
+                    to="/sign-in"
+                    className="flex items-center text-center gap-2 ms-2"
+                  >
+                    <FiLogIn className="text-2xl" /> <span>Sign In</span>
+                  </Link>
+                </>
               )}
-             <div className="ml-2 mt-1 sm:mt-0 sm:ml-0">
-             <ThemeToggle text="Theme" />
-             </div>
+              <div className="ml-2 mt-1 sm:mt-0 sm:ml-0">
+                <ThemeToggle text="Theme" />
+              </div>
             </div>
           </SheetContent>
         </Sheet>

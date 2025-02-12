@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
@@ -11,17 +10,15 @@ import { BookProvider } from "./context/BookContext";
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-    <ThemeProvider>
-      <BrowserRouter>
-        <AuthProvider>
-          <BookProvider>
-            <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-              <App />
-            </GoogleOAuthProvider>
-          </BookProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </ThemeProvider>
-  // </StrictMode>
+  <ThemeProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <BookProvider>
+          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            <App />
+          </GoogleOAuthProvider>
+        </BookProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </ThemeProvider>
 );
